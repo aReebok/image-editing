@@ -132,11 +132,10 @@ def mosaic(image_name,new_name, precision):
     
     fig.show()
     
-    Mask.save(new_name+".jpg")
+    Mask.save(new_name+".png")
     
     print("Image saved :)")
     #image is saved to the current directory
 
 
-                        
-            
+mosaic('lion.jpg','sample2', 1)
