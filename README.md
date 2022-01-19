@@ -4,12 +4,12 @@
 
 All responses will have the form 
 
-'''json
+```json
 {
     "userID": "User ID of the user who made the request",
     "imageURL": "Holds the image URL to be downloaded and converted",
 }
-'''
+```
 
 ### Create a mosaic image
 
