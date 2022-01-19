@@ -14,7 +14,9 @@ All responses will have the form
 ### Create a mosaic image
 
 **Definition**
-'POST /'
+
+`POST /`
 
 **Response**
+
 Sends a file (TBD).

@@ -14,13 +14,15 @@ def image():
         request_data = request.get_json()
         user_id = request_data['userID']
         image_url = request_data['imageURL']
-        time = re.sub(r"[,.:;@#?!&$]+\ *", "-", datetime.now())
+        # time = re.sub(r"[,.:;@#?!&$]+\ *", "-", datetime.now())
 
-        r = requests.get(image_url)
-        with open(user_id + "-" + time + '.png', 'wb') as f:
-            f.write(r.content)
+        # r = requests.get(image_url)
+        # with open(user_id + "-" + time + '.png', 'wb') as f:
+        #     f.write(r.content)
         
-        return "IMAGE RECIEVED BY USER " + user_id
+        return '''REQUEST RECIEVED
+        >> UserId: {}
+        >> imageUrl: {}'''.format(user_id, image_url)
     else:
         return '''
         ERROR: Requesting @ route /image with method other than POST.
