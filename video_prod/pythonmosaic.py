@@ -40,7 +40,8 @@ def mosaic(image_name,new_name, precision):
     pixle=0 #i know this is spelled wrong but this variable helps keep tract of RBG averages, and append to the list:"listue"
 
     directory=os.path.dirname(os.path.abspath(__file__)) #gets the directory of this file
-    filename2=os.path.join(directory, str(image_name)) # creates file path for the image name given by the user
+    input_dir=os.path.join(directory, r'images')
+    filename2=os.path.join(input_dir, str(image_name)) # creates file path for the image name given by the user
     file3=Image.open(filename2) #opens the given image
 
     org_width, org_height = file3.size # this stores the height and the width of the given file.
@@ -63,7 +64,9 @@ def mosaic(image_name,new_name, precision):
     for i in range(3283): #records the names/color composition of all photos in the project   
         n=str(picn) #this is the picture number 
        	n=(n.zfill(4)) #fills intergers to 4 digits: ie. from 4 to 0004 or from 10 to 0010 etx
-       	filename1=os.path.join(directory, small_image_name +n+'.jpg') #filepath
+        
+        mosaic=os.path.join(directory, r'flowers')
+       	filename1=os.path.join(mosaic, small_image_name +n+'.jpg') #filepath
        	content1=plt.imread(filename1) #this allows us to examine/store/compare the pixels of the smaller images.
        	for n in (0,1,2): # this loop gets the small pictures color composition
             for p in range (smallimg_wh): #this loop is for adding up all the pixels of one small image and storing it.
@@ -77,9 +80,10 @@ def mosaic(image_name,new_name, precision):
         filesname.append(filename1) #the file's path is appended here to be able to recall it later if it matches.
         picn+=1 # this changes the number in the names of the small images being scanned,allowing this loop to go through all the images. 
         
-    print ("COLORS LIST HAS BEEN CREATED")
+    # print ("COLORS LIST HAS BEEN CREATED")
     
-    filename2=os.path.join(directory, str(image_name)) # creates file path for the image name given by the user
+    output_dir=os.path.join(directory, r'images')
+    filename2=os.path.join(output_dir, str(image_name)) # creates file path for the image name given by the user
     
     file3=Image.open(filename2) #opens the given image
     org_width, org_height = file3.size # this stores the height and the width of the given file.
@@ -103,7 +107,7 @@ def mosaic(image_name,new_name, precision):
     #miniv=20
     listue1=[] # another list 
     
-    print ("PICTURE MATHCHING STARTS NOW")
+    # print ("PICTURE MATHCHING STARTS NOW")
     
     for y in range(smallimg_div_y): # this loop scans 20x20 or 30x30 sections of the original image, recording their color contents as well
         for z in range(smallimg_div_x):
@@ -122,7 +126,7 @@ def mosaic(image_name,new_name, precision):
             match=get_flower(red,green,blue,colors) # a function which compares the colors list to the RGB average from original image's sections. 
             file1=Image.open(filesname[match]) #opens the image which matches the best 
             Mask.paste(file1,(wid,hei)) # pastes the image on the mask at a certain position
-    print ("MATCHING")
+    # print ("MATCHING")
             
     fig,ax=plt.subplots(1,2) # creates the gird which displays the images
     
@@ -130,12 +134,9 @@ def mosaic(image_name,new_name, precision):
     ax[1].imshow(Mask)
     #ax[2].imshow(file1)
     
-    fig.show()
+    # fig.show()
     
-    Mask.save(new_name+".png")
+    Mask.save("./output/" + new_name+".png")
     
     print("Image saved :)")
     #image is saved to the current directory
-
-
-mosaic('lion.jpg','sample2', 1)

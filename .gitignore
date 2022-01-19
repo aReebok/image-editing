@@ -1,5 +1,8 @@
 venv
-.mp4
-.jpg
-.env
+*.mp4
+*.jpg
+
 images/
+flowers/
+output/
+__pycache__/
