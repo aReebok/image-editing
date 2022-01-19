@@ -15,7 +15,6 @@ def image():
         user_id = request_data['userID']
         image_url = request_data['imageURL']
         # time = re.sub(r"[,.:;@#?!&$]+\ *", "-", datetime.now())
-
         # r = requests.get(image_url)
         # with open(user_id + "-" + time + '.png', 'wb') as f:
         #     f.write(r.content)

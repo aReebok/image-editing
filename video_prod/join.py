@@ -1,29 +1,27 @@
 import cv2
 import os
 import shutil
-import pythonmosaic
 
-video_name = '00_video.avi'
-image_folder = 'images'
+# code from
+# https://www.programcreek.com/python/example/72134/cv2.VideoWriter
 
-images = [img for img in os.listdir(image_folder) if img.endswith(".jpg")]
+video_name = '08_output.mp4'
+image_folder = 'output_backup'
+
+images = [img for img in os.listdir(image_folder) if img.endswith(".png")]
 
 frame = cv2.imread(os.path.join(image_folder, images[0]))
 height, width, layers = frame.shape
 
-video = cv2.VideoWriter(video_name, 0, 25, (width,height))
+# video = cv2.VideoWriter(video_name, fourcc, 25, (width,height))
+video = cv2.VideoWriter(video_name, 0x00000021, 25, (width,height))
 
+count = 0
 for image in images:
+    # if count % 3 == 0:
     video.write(cv2.imread(os.path.join(image_folder, image)))
-
-outpath = os.path.join(os.getcwd(), r'output')
-if os.path.exists(outpath) and os.path.isdir(outpath):
-    shutil.rmtree(outpath)
-os.makedirs(outpath)
-
-
+# else:
+#         pass
 
 cv2.destroyAllWindows()
 video.release()
-
-

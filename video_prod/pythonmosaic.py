@@ -130,13 +130,17 @@ def mosaic(image_name,new_name, precision):
             
     fig,ax=plt.subplots(1,2) # creates the gird which displays the images
     
+
     ax[0].imshow(file3)
     ax[1].imshow(Mask)
+    
+    file3.close()
+    file1.close()
     #ax[2].imshow(file1)
     
     # fig.show()
     
     Mask.save("./output/" + new_name+".png")
-    
+
     print("Image saved :)")
     #image is saved to the current directory
