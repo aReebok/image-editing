@@ -7,7 +7,7 @@
 #include <math.h>
 
 #define FLOWERFILE "flower_info"
-// mosaic("./lion.jpg", "op", 1) PYTHON TEST LINE
+
 using namespace cv;
 using namespace std;
 namespace fs = std::filesystem;
@@ -15,6 +15,8 @@ namespace fs = std::filesystem;
 void mosaic(string file_name, string output_name, int precision);
 void parse_flowers();
 void read_flowers();
+void cpp_mosaic(string, string, int);
+
 Mat get_flower(int, int, int);
 
 struct Flower {
@@ -25,19 +27,21 @@ struct Flower {
 vector<Flower> flowers; 
 
 int main(int argc, char** argv ) {
-    if ( argc != 2 )
+    if ( argc  < 2 )
     {
         printf("usage: DisplayImage.out <Image_Path>\n");
         return -1;
     }
+    string filename = argv[1];
+    string output = argv[2];
 
     parse_flowers();
     read_flowers();
-    mosaic(argv[1], "op.jpg", 1);
+    mosaic(filename, output, 1);
 }
 
 void parse_flowers() {
-    string path = "./../flowers/";
+    string path = "./flowers/";
     Mat image;
     uchar * p;
     int red, green, blue;
@@ -66,10 +70,6 @@ void parse_flowers() {
         myfile<< entry.path() << " " << red << " " << green << " " << blue << endl;        
     }
     myfile.close();
-    // Mat image = imread("./../flowers/flower_0001.jpg");
-    // namedWindow("Display Image", WINDOW_AUTOSIZE );
-    // imshow("Display Image", image);
-    // waitKey(0);
 }
 
 void read_flowers() {
@@ -101,11 +101,6 @@ void mosaic(string file_name, string output_name, int precision) {
     int channels = image.channels();
     int nRows = image.rows;
     int nCols = image.cols * channels;
-
-    // if (image.isContinuous()) {
-    //     nCols *= nRows;
-    //     nRows = 1;
-    // }
 
     uchar * imgPtr, *floPtr;
     int r=0,g=0,b=0;
@@ -145,9 +140,6 @@ void mosaic(string file_name, string output_name, int precision) {
 Mat get_flower(int red, int blue, int green) {
     Mat image;
     int value, best = INT32_MAX, index = 0;
-    random_shuffle(flowers.begin(), flowers.end());
-    
-    int threshold = 10;
 
     for (int i = 0; i < flowers.size(); i++) {
         value = pow(red- (flowers[i].red), 2) + pow(green - (flowers[i].green), 2) + pow(blue - (flowers[i].blue), 2);
@@ -155,7 +147,6 @@ Mat get_flower(int red, int blue, int green) {
             best = value;
             index = i;
         }
-        if (value < threshold) break;
     }
     image = imread(flowers[index].file, 1);
     return image;
