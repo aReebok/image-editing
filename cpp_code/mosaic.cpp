@@ -77,7 +77,7 @@ void read_flowers() {
     string name;
     int red, blue, green;
     while (ifs >> name) {
-        ifs >> red >> blue >> green;
+        ifs >> red >> green >> blue;
         name.pop_back();
         name.erase(0, 1);
         Flower f;
@@ -127,9 +127,11 @@ void mosaic(string file_name, string output_name, int precision) {
             r /= size * size;
             flow = get_flower(r,b,g);
             for (int k = 0; k < size; k++) {
+                if (i + k >= nRows) {break;} 
                 imgPtr = image.ptr<uchar>(i+k);
                 floPtr = flow.ptr<uchar>(k);
                 for (int l = 0; l < size*3; l +=3) {
+                    if (j+l >= nCols) {break;} 
                     imgPtr[j+l] = floPtr[l];
                     imgPtr[j+l+1] = floPtr[l+1];
                     imgPtr[j+l+2] = floPtr[l+2];
@@ -139,16 +141,21 @@ void mosaic(string file_name, string output_name, int precision) {
     }
     imwrite(output_name, image);
 }
+
 Mat get_flower(int red, int blue, int green) {
     Mat image;
     int value, best = INT32_MAX, index = 0;
+    random_shuffle(flowers.begin(), flowers.end());
+    
+    int threshold = 10;
 
     for (int i = 0; i < flowers.size(); i++) {
-        value = pow(red - (flowers[i].red), 2) + pow(green - (flowers[i].green), 2) + pow(blue - (flowers[i].blue), 2);
+        value = pow(red- (flowers[i].red), 2) + pow(green - (flowers[i].green), 2) + pow(blue - (flowers[i].blue), 2);
         if (value < best) {
             best = value;
             index = i;
         }
+        if (value < threshold) break;
     }
     image = imread(flowers[index].file, 1);
     return image;
