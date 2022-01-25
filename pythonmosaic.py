@@ -63,7 +63,10 @@ def mosaic(image_name,new_name, precision):
     for i in range(3283): #records the names/color composition of all photos in the project   
         n=str(picn) #this is the picture number 
        	n=(n.zfill(4)) #fills intergers to 4 digits: ie. from 4 to 0004 or from 10 to 0010 etx
-       	filename1=os.path.join(directory, small_image_name +n+'.jpg') #filepath
+            
+        directory_s=os.path.join(directory, "flowers")
+
+       	filename1=os.path.join(directory_s, small_image_name +n+'.jpg') #filepath
        	content1=plt.imread(filename1) #this allows us to examine/store/compare the pixels of the smaller images.
        	for n in (0,1,2): # this loop gets the small pictures color composition
             for p in range (smallimg_wh): #this loop is for adding up all the pixels of one small image and storing it.
@@ -79,9 +82,9 @@ def mosaic(image_name,new_name, precision):
         
     print ("COLORS LIST HAS BEEN CREATED")
     
-    filename2=os.path.join(directory, str(image_name)) # creates file path for the image name given by the user
+    # filename2=os.path.join(directory, str(image_name)) # creates file path for the image name given by the user
     
-    file3=Image.open(filename2) #opens the given image
+    # file3=Image.open(filename2) #opens the given image
     org_width, org_height = file3.size # this stores the height and the width of the given file.
     
     #the following if statement will determine the preciseness of the image to the users content and set up some variables
@@ -132,10 +135,10 @@ def mosaic(image_name,new_name, precision):
     
     fig.show()
     
-    Mask.save(new_name+".png")
+    Mask.save(new_name)
     
     print("Image saved :)")
     #image is saved to the current directory
 
 
-mosaic('lion.jpg','sample2', 1)
+# mosaic('lion.','sample2.png', 1)
