@@ -36,17 +36,8 @@ def image():
 
     elif request.method == 'GET':
         return "Use a post request to post an image to put through mosaic."
-
-    # elif request.method == 'DELETE':
-    #     request_data = request.get_json()
-    #     image = request_data['image']
-    #     if os.path.exists(image):
-    #         os.remove("")
-    #         return "200 image " + image + " deleted "
-    #     else: 
-    #         return "404 image does not exist"
     else: 
-        return "Use GET, POST, or DELETE only."
+        return "Use GET or POST only."
 
 @app.route("/image/<path:path>")
 def get_image(path):

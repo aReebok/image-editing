@@ -10,6 +10,7 @@ flowers/
 output/
 __pycache__/
 build/
+discord_image_uploads/
 
 flower_info
 test.py
