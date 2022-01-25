@@ -1,5 +1,7 @@
+from ntpath import join
 from flask import Flask, request
 import requests
+import os
 
 # other
 import re
@@ -7,8 +9,24 @@ import datetime
 
 app = Flask(__name__)
 
+@app.route("/")
+def root():
+    return 'Welcome from yoga260!'
 
-@app.route("/image", methods=['POST'])
+@app.route("/hi")
+def hello():
+    return 'Hi from yoga260!'
+
+
+@app.route("/bye")
+def bye():
+    return "Bye from yoga260!"
+
+@app.route("/ls")
+def ls():
+    return "  |  ".join(os.listdir("."))
+
+@app.route("/image", methods=['GET', 'POST'])
 def image():
     if request.method == 'POST':
         request_data = request.get_json()
@@ -28,6 +46,10 @@ def image():
             Only post method is supported. 
             Upon using post, the resulting image will be sent back.
         '''
+
+@app.route("/pwd")
+def get_pwd():
+    return os.getcwd()
 
 if __name__ == '__main__':
    app.run(debug = True)

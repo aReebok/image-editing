@@ -9,3 +9,7 @@ images/
 flowers/
 output/
 __pycache__/
+build/
+
+flower_info
+test.py

@@ -15,7 +15,7 @@ namespace fs = std::filesystem;
 void mosaic(string file_name, string output_name, int precision);
 void parse_flowers();
 void read_flowers();
-void cpp_mosaic(string, string, int);
+// void cpp_mosaic(string, string, int);
 
 Mat get_flower(int, int, int);
 
@@ -41,7 +41,7 @@ int main(int argc, char** argv ) {
 }
 
 void parse_flowers() {
-    string path = "./flowers/";
+    string path = "./../flowers/";
     Mat image;
     uchar * p;
     int red, green, blue;
