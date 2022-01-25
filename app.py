@@ -1,55 +1,57 @@
 from ntpath import join
-from flask import Flask, request
+from flask import Flask, jsonify, request, send_from_directory
 import requests
 import os
 
 # other
 import re
-import datetime
+from datetime import datetime
 
 app = Flask(__name__)
 
 @app.route("/")
 def root():
-    return 'Welcome from yoga260!'
+    return 'Welcome to Python Mosaic API for images and videos! Hosted on Heroku by aReebok.'
 
-@app.route("/hi")
-def hello():
-    return 'Hi from yoga260!'
-
-
-@app.route("/bye")
-def bye():
-    return "Bye from yoga260!"
+@app.route("/pwd")
+def get_pwd():
+    return os.getcwd()
 
 @app.route("/ls")
 def ls():
-    return "  |  ".join(os.listdir("."))
+    return jsonify(os.listdir("."))
 
-@app.route("/image", methods=['GET', 'POST'])
+@app.route("/image", methods=['GET', 'POST', 'DELETE'])
 def image():
     if request.method == 'POST':
         request_data = request.get_json()
         user_id = request_data['userID']
         image_url = request_data['imageURL']
-        # time = re.sub(r"[,.:;@#?!&$]+\ *", "-", datetime.now())
-        # r = requests.get(image_url)
-        # with open(user_id + "-" + time + '.png', 'wb') as f:
-        #     f.write(r.content)
-        
-        return '''REQUEST RECIEVED
-        >> UserId: {}
-        >> imageUrl: {}'''.format(user_id, image_url)
-    else:
-        return '''
-        ERROR: Requesting @ route /image with method other than POST.
-            Only post method is supported. 
-            Upon using post, the resulting image will be sent back.
-        '''
+        input_image = requests.get(image_url)
 
-@app.route("/pwd")
-def get_pwd():
-    return os.getcwd()
+        return_file = (user_id + "_" + re.sub(r"[,.:;@#?!&$]+\ *", "-", str(datetime.now())) + '.png').replace(' ', '-')
+        with open(return_file, 'wb') as f:
+            f.write(input_image.content)
+        return return_file
+
+    elif request.method == 'GET':
+        return "Use a post request to post an image to put through mosaic."
+
+    # elif request.method == 'DELETE':
+    #     request_data = request.get_json()
+    #     image = request_data['image']
+    #     if os.path.exists(image):
+    #         os.remove("")
+    #         return "200 image " + image + " deleted "
+    #     else: 
+    #         return "404 image does not exist"
+    else: 
+        return "Use GET, POST, or DELETE only."
+
+@app.route("/image/<path:path>")
+def get_image(path):
+    """Download the processed file"""
+    return send_from_directory(os.getcwd(), path, as_attachment=True)
 
 if __name__ == '__main__':
    app.run(debug = True)
