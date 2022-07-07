@@ -1,4 +1,4 @@
-# Python Image and Video Mosaic API
+# Python Image and Video Mosaic API by Areeba and Kaashya
 
 ## Usage
 
