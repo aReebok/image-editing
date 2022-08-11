@@ -15,6 +15,12 @@ def create_rgb_small_img_list(pictures):
 def get_rgb_small_img(img):
     return np.array(img).mean(axis=(0,1), dtype=int)
 
+
+def unblockshaped(img_arr_5d):
+    h, w, t_h, t_w, c = img_arr_5d.shape
+    img_arr_5d = img_arr_5d.swapaxes(2,1)
+    return img_arr_5d.reshape(h*t_h, w*t_w, c)
+
 def blockshaped(img_path, kernel_size: tuple):
     img = io.imread(img_path)
     h, w, c = img.shape
@@ -24,19 +30,50 @@ def blockshaped(img_path, kernel_size: tuple):
                             w // tile_w, tile_w,
                             c)
 
-    tiled_arr = tiled_arr.swapaxes(1, 2)
-    tiled_arr_2 = np.mean(tiled_arr, axis=(2,3))
 
-    return tiled_arr_2
+    tiled_arr = tiled_arr.swapaxes(1, 2)
+    # io.imsave("omg.jpg",tiled_arr[100][100])
+    return tiled_arr
+    # return unblockshaped(tiled_arr)
+
+
+def avg_rgb_channels_5D_arr(arr_5d):
+    return np.mean(arr_5d, axis=(2,3), dtype=int)
+
+def trunc_rgb(arr, fac):
+    return np.around(arr*fac).astype(int)
+
+# def write_out_small_imgs(a):
+#     c = trunc_rgb(a, 0.1)
+#     h, c = c.shape
+#     d = np.stack((np.arange(start=1, stop=h), c))
+#     # print(d.shape)
+#     np.savetxt('rgb_small_img.txt', trunc_rgb(a, 0.1), fmt='%d')
 
 small_images_path = './images/*.jpg'
 input_image_path = 'lion.jpg'
 pictures = io.imread_collection(small_images_path)
 
+def closest(colors, target):
+    distances = np.sqrt(np.sum((colors-target)**2, axis=1))
+    index_of_smallest = np.where(distances==np.amin(distances))
+    # smallest_distance = colors[index_of_smallest]
+    return index_of_smallest[0][0]
+
+
+
+
 if __name__ == '__main__':
     a = create_rgb_small_img_list(pictures)
-    b = blockshaped(input_image_path, (20,20))
-    print(a.shape)
-    print(b.shape)
+    b = blockshaped(input_image_path, (20, 20))
+    # c = avg_rgb_channels_5D_arr(b)
+    c = unblockshaped(b)
+    # print(b.shape)
+    io.imsave('testlion.jpg', c)
 
-
+    #map
+    # height, width, channels = c.shape
+    #
+    # for i in range(height):
+    #     for j in range(width):
+    #         get_rgb_small_img(pictures[closest(a, c[i][j])])
