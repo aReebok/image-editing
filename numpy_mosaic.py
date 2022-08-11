@@ -25,13 +25,9 @@ def blockshaped(img_path, kernel_size: tuple):
                             c)
 
     tiled_arr = tiled_arr.swapaxes(1, 2)
-    tiled_arr_2 = np.mean(tiled_arr, axis=(1,3), dtype=int)
-    return tiled_arr
+    tiled_arr_2 = np.mean(tiled_arr, axis=(2,3))
 
-def apply_vec_func(arr):
-    get_rgb_small_img_vectorized = np.vectorize(get_rgb_small_img)
-    result = get_rgb_small_img_vectorized(arr)
-    print(result.shape)
+    return tiled_arr_2
 
 small_images_path = './images/*.jpg'
 input_image_path = 'lion.jpg'
@@ -40,8 +36,7 @@ pictures = io.imread_collection(small_images_path)
 if __name__ == '__main__':
     a = create_rgb_small_img_list(pictures)
     b = blockshaped(input_image_path, (20,20))
-    # print(a.shape)
-    # print(b.shape)
-    # apply_vec_func(b)
+    print(a.shape)
+    print(b.shape)
 
 
