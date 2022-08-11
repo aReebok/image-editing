@@ -7,7 +7,6 @@ from numpy import savetxt
 
 def create_rgb_small_img_list(pictures):
     rgb_small_imgs = []
-    # print(pictures[0].shape)
     for i in range(len(pictures)):
         rgb_small_imgs.append(get_rgb_small_img(pictures[i]))
     return np.array(rgb_small_imgs)
@@ -18,7 +17,7 @@ def get_rgb_small_img(img):
 
 def unblockshaped(img_arr_5d):
     h, w, t_h, t_w, c = img_arr_5d.shape
-    img_arr_5d = img_arr_5d.swapaxes(2,1)
+    img_arr_5d = img_arr_5d.swapaxes(2, 1)
     return img_arr_5d.reshape(h*t_h, w*t_w, c)
 
 def blockshaped(img_path, kernel_size: tuple):
@@ -30,12 +29,8 @@ def blockshaped(img_path, kernel_size: tuple):
                             w // tile_w, tile_w,
                             c)
 
-
     tiled_arr = tiled_arr.swapaxes(1, 2)
-    # io.imsave("omg.jpg",tiled_arr[100][100])
     return tiled_arr
-    # return unblockshaped(tiled_arr)
-
 
 def avg_rgb_channels_5D_arr(arr_5d):
     return np.mean(arr_5d, axis=(2,3), dtype=int)
@@ -66,14 +61,14 @@ def closest(colors, target):
 if __name__ == '__main__':
     a = create_rgb_small_img_list(pictures)
     b = blockshaped(input_image_path, (20, 20))
-    # c = avg_rgb_channels_5D_arr(b)
-    c = unblockshaped(b)
-    # print(b.shape)
-    io.imsave('testlion.jpg', c)
+    c = avg_rgb_channels_5D_arr(b)
 
     #map
-    # height, width, channels = c.shape
-    #
-    # for i in range(height):
-    #     for j in range(width):
-    #         get_rgb_small_img(pictures[closest(a, c[i][j])])
+    height, width, channels = c.shape
+
+    for i in range(height):
+        for j in range(width):
+            b[i][j] = pictures[closest(a, c[i][j])]
+
+    d = unblockshaped(b)
+    io.imsave('testlion.jpg', d)
