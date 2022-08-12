@@ -7,8 +7,8 @@ Hoping to speed up this software to create an API for it for the purpose of addi
 
 | Date | Runtime (s) | Changes | 
 | ---- | ------------| ------- |
-Aug 10 | 9 | Using NumPy vectorization 
-Aug 9 | 104 | Code from Spring '19 
+Aug 10 | 9 | Using NumPy vectorization operations with a 5D array
+Aug 9 | 104 | Code from Spring '19 that used like 5 nested for-loops
 
 ## Contribution Guide
 1. Fork the repository.
