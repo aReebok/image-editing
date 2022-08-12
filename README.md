@@ -3,7 +3,12 @@
 
 Hoping to speed up this software to create an API for it for the purpose of adding it to a Discord bot or something!
 
-Current Run Time: ~ 9s.
+### Past Run Times (2022)
+
+| Date | Runtime (s) | Changes | 
+| ---- | ------------| ------- |
+Aug 10 | 9 | Using NumPy vectorization 
+Aug 9 | 104 | Code from Spring '19 
 
 ## Contribution Guide
 1. Fork the repository.
