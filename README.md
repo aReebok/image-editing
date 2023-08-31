@@ -1,5 +1,5 @@
 # mosaifyer
-![speed1](https://github.com/aReebok/mosaifyer/assets/67135619/ce9ec13c-2d8f-4117-9d9b-d83bf84a8d05)
+![mosaic-example](https://github.com/aReebok/mosaifyer/assets/67135619/baebf283-2a1f-4c3e-8208-91a3f8bd3772)
 
 🖼️ An image mosaic maker using python's libraries NumPy, scikit-image to create a mosaic output of a given image from small images of flowers.
 
