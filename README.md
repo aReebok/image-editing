@@ -1,4 +1,6 @@
 # mosaifyer
+![Mosaic-Loop-Video gif (1)](https://github.com/aReebok/mosaifyer/assets/67135619/e686ce94-62a2-426f-bd2c-6323f5288cbc)
+
 🖼️ An image mosaic maker using python's libraries NumPy, scikit-image to create a mosaic output of a given image from small images of flowers.
 
 Hoping to speed up this software to create an API for it for the purpose of adding it to a Discord bot or something!
